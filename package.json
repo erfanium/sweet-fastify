@@ -1,6 +1,6 @@
 {
   "name": "sweet-fastify",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "sweet fastify routes",
   "main": "lib/sweet-fastify.js",
   "types": "typings/sweet-fastify.d.ts",
