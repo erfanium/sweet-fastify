@@ -1,16 +1,20 @@
-import { FastifyReply, FastifyRequest, HTTPMethods, onRequestHookHandler, RouteOptions } from 'fastify';
+import { FastifyReply, FastifyRequest, HookHandlerDoneFunction, HTTPMethods, RouteOptions } from 'fastify';
 export declare const authDataSymbol: unique symbol;
-export interface FastifyRequestWithAuthData<T = any> extends FastifyRequest {
+export interface FastifyRequestWithAuthData<T> extends FastifyRequest {
     [authDataSymbol]?: T;
 }
-export interface SweetHandler<Params, Res> {
-    (params: Params, authData: any, req: FastifyRequest, rep: FastifyReply): Promise<Res>;
+export interface SweetHandler<Params, Res, AuthData> {
+    (params: Params, authData: AuthData, req: FastifyRequest, rep: FastifyReply): Promise<Res>;
 }
-export interface SweetRoute<Params, Res> {
+export interface SweetAuth<AuthData> {
+    (req: FastifyRequestWithAuthData<AuthData>, rep: FastifyReply, done: HookHandlerDoneFunction): Promise<unknown> | void;
+}
+export interface SweetRoute<Params, Res, AuthData> {
     method: HTTPMethods | HTTPMethods[];
     url: string;
     params?: any;
-    auth?: onRequestHookHandler;
-    handler: SweetHandler<Params, Res>;
+    mergeParams?: boolean;
+    auth?: SweetAuth<AuthData>;
+    handler: SweetHandler<Params, Res, AuthData>;
 }
-export declare function sweet<Params, Res>(route: SweetRoute<Params, Res>): RouteOptions;
+export declare function sweet<Params, Res, AuthData>(route: SweetRoute<Params, Res, AuthData>): RouteOptions;

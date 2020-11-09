@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "sweet fastify routes",
   "main": "lib/sweet-fastify.js",
-  "types": "typing/sweet-fastify.d.ts",
+  "types": "typings/sweet-fastify.d.ts",
   "scripts": {
     "test": "standard && tap test/**/*.test.js && tsd",
     "test-ci": "tap test/**/*.test.js --coverage-report=html",
