@@ -53,12 +53,13 @@ const preValidation: preValidationHookHandler = (req, rep, next) => {
 
 export function sweet<Params, Res, AuthData>(
   route: SweetRoute<Params, Res, AuthData>
-): RouteOptions {
+): RouteOptions & { _route: SweetRoute<Params, Res, AuthData> } {
   if (typeof route.mergeParams !== 'boolean') {
     route.mergeParams = route.method !== 'POST';
   }
 
   return {
+    _route: route,
     method: route.method,
     url: route.url,
     schema: {

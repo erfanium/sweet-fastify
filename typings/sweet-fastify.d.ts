@@ -17,4 +17,6 @@ export interface SweetRoute<Params, Res, AuthData> {
     auth?: SweetAuth<AuthData>;
     handler: SweetHandler<Params, Res, AuthData>;
 }
-export declare function sweet<Params, Res, AuthData>(route: SweetRoute<Params, Res, AuthData>): RouteOptions;
+export declare function sweet<Params, Res, AuthData>(route: SweetRoute<Params, Res, AuthData>): RouteOptions & {
+    _route: SweetRoute<Params, Res, AuthData>;
+};
