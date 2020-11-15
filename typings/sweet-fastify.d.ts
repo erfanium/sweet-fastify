@@ -4,7 +4,7 @@ export interface FastifyRequestWithAuthData<T> extends FastifyRequest {
     [authDataSymbol]?: T;
 }
 export interface SweetHandler<Params, Res, AuthData> {
-    (params: Params, authData: AuthData, req: FastifyRequest, rep: FastifyReply): Promise<Res>;
+    (params: Params, authData: AuthData, req: FastifyRequest): Promise<Res>;
 }
 export interface SweetAuth<AuthData> {
     (req: FastifyRequestWithAuthData<AuthData>, rep: FastifyReply, done: HookHandlerDoneFunction): Promise<unknown> | void;

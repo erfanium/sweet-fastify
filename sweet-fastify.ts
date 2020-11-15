@@ -18,7 +18,6 @@ export interface SweetHandler<Params, Res, AuthData> {
     params: Params,
     authData: AuthData,
     req: FastifyRequest,
-    rep: FastifyReply
   ): Promise<Res>;
 }
 
@@ -67,8 +66,11 @@ export function sweet<Params, Res, AuthData>(
     },
     onRequest: route.auth,
     preValidation: route.mergeParams ? preValidation : undefined,
-    handler(req: FastifyRequestWithAuthData<AuthData>, rep) {
-      return route.handler(req.body as Params, req[authDataSymbol]!, req, rep);
+    async handler(req: FastifyRequestWithAuthData<AuthData>, rep) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const result = await route.handler(req.body as Params, req[authDataSymbol]!, req);
+      if (result !== undefined) return result
+      rep.send()
     },
   };
 }
