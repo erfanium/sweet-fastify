@@ -6,7 +6,11 @@ Build HTTP API much faster, cleaner and safer without losing performance
 - Validator schema checker via typescript for extra safely
 - Clean and safe authentication middleware handler
 
-## Example
+## Examples
+
+This examples are used in production by me!
+
+### Basic route
 
 ```ts
 interface Request {
@@ -44,3 +48,33 @@ export const code = sweet({
    },
 })
 ```
+
+### With authentication
+
+```ts
+interface Request {
+   name: string
+}
+
+export const createBook = sweet({
+   method: 'POST',
+   url: '/books',
+   auth: users,
+   params: {
+      name: 'string|max:30',
+   },
+   async handler(params: Request, { userID }): Promise<Book> {
+      const book: Book = {
+         id: oidHex(),
+         v: oidHex(),
+         creator: userID,
+         deleted: false,
+         name: params.name,
+      }
+
+      await Book.repo.insert(book)
+
+      return book
+   },
+ })
+ ```
