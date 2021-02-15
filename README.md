@@ -8,7 +8,7 @@ Build HTTP API much faster, cleaner and safer without losing performance
 
 ## Examples
 
-This examples are used in production by me!
+These examples are used in production by me!
 
 ### Basic route
 
